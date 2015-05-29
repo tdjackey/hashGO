@@ -1,0 +1,2 @@
+# hashGO
+GO hashGO
