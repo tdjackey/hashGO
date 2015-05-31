@@ -14,9 +14,6 @@ void compare(const string &result, const string &expected)
 }
 
 
-/*
- * The 3 test vectors from FIPS PUB 180-1
- */
 
 void test_standard()
 {
