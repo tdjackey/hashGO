@@ -44,6 +44,8 @@ static void R0(const uint32_t block[BLOCK_INTS], const uint32_t v, uint32_t &w, 
 {
     z += ((w&(x^y))^y) + block[i] + 0x5a827999 + rol(v, 5);
     w = rol(w, 30);
+    cout << w << endl;
+
 }
 
 
@@ -52,6 +54,7 @@ static void R1(uint32_t block[BLOCK_INTS], const uint32_t v, uint32_t &w, const 
     block[i] = blk(block, i);
     z += ((w&(x^y))^y) + block[i] + 0x5a827999 + rol(v, 5);
     w = rol(w, 30);
+    cout << w << endl;
 }
 
 
@@ -60,6 +63,7 @@ static void R2(uint32_t block[BLOCK_INTS], const uint32_t v, uint32_t &w, const 
     block[i] = blk(block, i);
     z += (w^x^y) + block[i] + 0x6ed9eba1 + rol(v, 5);
     w = rol(w, 30);
+    cout << w << endl;
 }
 
 
@@ -68,6 +72,7 @@ static void R3(uint32_t block[BLOCK_INTS], const uint32_t v, uint32_t &w, const 
     block[i] = blk(block, i);
     z += (((w|x)&y)|(w&x)) + block[i] + 0x8f1bbcdc + rol(v, 5);
     w = rol(w, 30);
+    cout << w << endl;
 }
 
 
@@ -76,6 +81,7 @@ static void R4(uint32_t block[BLOCK_INTS], const uint32_t v, uint32_t &w, const 
     block[i] = blk(block, i);
     z += (w^x^y) + block[i] + 0xca62c1d6 + rol(v, 5);
     w = rol(w, 30);
+    cout << w << endl;
 }
 
 
@@ -182,6 +188,7 @@ static void transform(uint32_t digest[], uint32_t block[BLOCK_INTS], uint64_t &t
     digest[4] += e;
 
     /* Count the number of transformations */
+    cout << endl;
     transforms++;
 }
 
@@ -195,7 +202,9 @@ static void buffer_to_block(const std::string &buffer, uint32_t block[BLOCK_INTS
                    | (buffer[4*i+2] & 0xff)<<8
                    | (buffer[4*i+1] & 0xff)<<16
                    | (buffer[4*i+0] & 0xff)<<24;
+        //cout << block[i] << "haha";
     }
+    //cout << endl;
 }
 
 
@@ -271,6 +280,7 @@ std::string SHA1::final()
     {
         result << std::hex << std::setfill('0') << std::setw(8);
         result << digest[i];
+        //cout << digest[i] << "*";
     }
 
     /* Reset for next run */
@@ -280,11 +290,3 @@ std::string SHA1::final()
     return result.str();
 }
 
-
-std::string SHA1::from_file(const std::string &filename)
-{
-    std::ifstream stream(filename.c_str(), std::ios::binary);
-    SHA1 checksum;
-    checksum.update(stream);
-    return checksum.final();
-}
