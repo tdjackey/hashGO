@@ -18,7 +18,7 @@ using namespace std;
 #define SHA256_O1(x) (SHA256_ROTL(x,15)^SHA256_ROTL(x,13)^SHA256_SR(x,10))
 
 
-char* SHA256(const char* str, char* sha256, long long length, FILE* file=NULL, bool space=false){
+char* SHA256(const char* str, char* sha256, long long length, bool space=false){
     char *pp, *ppend;
     long l, i, W[64], T1, T2, A, B, C, D, E, F, G, H, H0, H1, H2, H3, H4, H5, H6, H7;
     H0 = 0x6a09e667, H1 = 0xbb67ae85, H2 = 0x3c6ef372, H3 = 0xa54ff53a;
@@ -67,22 +67,30 @@ bool compare60(char *p1,char *p2){
 int main(){
 	char *start="zzzzzzzzzzzzzzz";
 	char *p1=new char[1000],*p2=new char[1000],*t1=new char[1000],*t2=new char[1000];
-	//char* (*func[4])(const char* str, char* sha1, long long length, FILE* file, bool space)={SHA1,SHA256,SHA3_256,SM3};
-	//char fname[4][10]={"SHA1","SHA256","SHA3_256","SM3"};
 	
 	strcpy(p1,start);
 	strcpy(p2,start);
 	do{
-		SHA256(p1,p1,15,NULL,0);
-		SHA256(p2,p2,15,NULL,0);
-		SHA256(p2,p2,15,NULL,0);
+		SHA256(p1,p1,15,0);
+		SHA256(p2,p2,15,0);
+		SHA256(p2,p2,15,0);
 	}while(!compare60(p1,p2));
+
+	for(int i=0;i<15;i++){
+		cout<<p1[i];
+	}
+	cout<<endl;
+	for(int i=0;i<15;i++){
+		cout<<p2[i];
+	}
+	cout<<endl;
+
 	strcpy(p1,start);
 	do{
 		strcpy(t1,p1);
 		strcpy(t2,p2);
-		SHA256(p1,p1,15,NULL,0);
-		SHA256(p2,p2,15,NULL,0);
+		SHA256(p1,p1,15,0);
+		SHA256(p2,p2,15,0);
 	}while(!compare60(p1,p2));
 	cout << "碰撞：" << endl;
 	for(int i=0;i<15;i++){
