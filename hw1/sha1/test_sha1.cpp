@@ -23,6 +23,39 @@ void test_standard()
     SHA1 checksum;
 
     cout << endl;
+    cout << "Test:     No string" << endl;
+    compare(checksum.final(), "da39a3ee5e6b4b0d3255bfef95601890afd80709");
+}
+
+
+/*
+ * Other tests
+ */
+
+void test_other()
+{
+    SHA1 checksum;
+
+  
+
+    cout << endl;
+    checksum.update("");
+    cout << "Test:     Empty string" << endl;
+    compare(checksum.final(), "da39a3ee5e6b4b0d3255bfef95601890afd80709");
+
+    cout << endl;
+    cout << "Test:     ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" << endl;
+    checksum.update("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    compare(checksum.final(), "03de6c570bfe24bfc328ccd7ca46b76eadaf4334");
+
+    cout << endl;
+    cout << "Test:     Two concurrent checksum calculations" << endl;
+    SHA1 checksum1, checksum2;
+    checksum1.update("abc");
+    compare(checksum2.final(), "da39a3ee5e6b4b0d3255bfef95601890afd80709"); /* "" */
+    compare(checksum1.final(), "a9993e364706816aba3e25717850c26c9cd0d89d"); /* "abc" */
+
+    cout << endl;
     cout << "Test:     abc" << endl;
     checksum.update("abc");
     compare(checksum.final(), "a9993e364706816aba3e25717850c26c9cd0d89d");
@@ -46,67 +79,13 @@ void test_standard()
 }
 
 
-/*
- * Other tests
- */
-
-void test_other()
-{
-    SHA1 checksum;
-
-    cout << endl;
-    cout << "Test:     No string" << endl;
-    compare(checksum.final(), "da39a3ee5e6b4b0d3255bfef95601890afd80709");
-
-    cout << endl;
-    checksum.update("");
-    cout << "Test:     Empty string" << endl;
-    compare(checksum.final(), "da39a3ee5e6b4b0d3255bfef95601890afd80709");
-
-    cout << endl;
-    cout << "Test:     abcde" << endl;
-    checksum.update("abcde");
-    compare(checksum.final(), "03de6c570bfe24bfc328ccd7ca46b76eadaf4334");
-
-    cout << endl;
-    cout << "Test:     Two concurrent checksum calculations" << endl;
-    SHA1 checksum1, checksum2;
-    checksum1.update("abc");
-    compare(checksum2.final(), "da39a3ee5e6b4b0d3255bfef95601890afd80709"); /* "" */
-    compare(checksum1.final(), "a9993e364706816aba3e25717850c26c9cd0d89d"); /* "abc" */
-}
-
-
-/*
- * immitate "sha1sum -b"
- */
-
-void test_file(const string &filename)
-{
-    cout << SHA1::from_file(filename) << " *" << filename << endl;
-}
-
-
-/*
- * main
- */
-
 int main(int argc, const char *argv[])
 {
-    if (argc > 1)
-    {
-        for (int i = 1; i < argc; i++)
-        {
-            test_file(argv[i]);
-        }
-    }
-    else
-    {
+
         test_standard();
-        test_other();
+        //test_other();
         cout << endl;
         cout << endl;
-    }
 
     return 0;
 }
