@@ -15,7 +15,7 @@ using namespace std;
 #define SHA256_E1(x) (SHA256_ROTL(x,26)^SHA256_ROTL(x,21)^SHA256_ROTL(x,7))
 #define SHA256_O0(x) (SHA256_ROTL(x,25)^SHA256_ROTL(x,14)^SHA256_SR(x,3))
 #define SHA256_O1(x) (SHA256_ROTL(x,15)^SHA256_ROTL(x,13)^SHA256_SR(x,10))
-char* SHA256(const char* str, char* sha256, long long length,  bool space=false){
+char* SHA256(const char* str, char* sha256, long long length, FILE* file=NULL, bool space=false){
     char *pp, *ppend;
     long l, i, W[64], T1, T2, A, B, C, D, E, F, G, H, H0, H1, H2, H3, H4, H5, H6, H7;
     H0 = 0x6a09e667, H1 = 0xbb67ae85, H2 = 0x3c6ef372, H3 = 0xa54ff53a;
@@ -44,18 +44,19 @@ char* SHA256(const char* str, char* sha256, long long length,  bool space=false)
             T1 = H + SHA256_E1(E) + SHA256_Ch(E, F, G) + K[i] + W[i];
             T2 = SHA256_E0(A) + SHA256_Maj(A, B, C);
             H = G, G = F, F = E, E = D + T1, D = C, C = B, B = A, A = T1 + T2;
-			//if(file)fprintf(file, "%08X %08X %08X %08X %08X %08X %08X %08X\n", A, B, C, D, E, F, G, H); 
+            if(file)fprintf(file, "%08X %08X %08X %08X %08X %08X %08X %08X\n", A, B, C, D, E, F, G, H); 
         }
         H0 += A, H1 += B, H2 += C, H3 += D, H4 += E, H5 += F, H6 += G, H7 += H;
     }
     free(pp - l);
     if(space) sprintf(sha256, "%08X %08X %08X %08X %08X %08X %08X %08X", H0, H1, H2, H3, H4, H5, H6, H7);
-	else sprintf(sha256, "%08X%08X%08X%08X%08X%08X%08X%08X", H0, H1, H2, H3, H4, H5, H6, H7);
+    else sprintf(sha256, "%08X%08X%08X%08X%08X%08X%08X%08X", H0, H1, H2, H3, H4, H5, H6, H7);
     return sha256;
 }
 
-int main(){
 
+int main(){
+/*
     
     char *result=new char[700];
 
@@ -117,7 +118,7 @@ int main(){
     cout << "最终结果: " << endl;
     cout << result << endl;
     cout << endl;
-    /*
+    */
 
     char *str1="";
     char *str2="abc";
@@ -153,7 +154,6 @@ int main(){
         fprintf(file,"\n");
     }
     fclose(file);
-    */
+    
     return 0;
 }
-
