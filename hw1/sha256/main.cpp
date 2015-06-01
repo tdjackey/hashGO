@@ -6,7 +6,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-using namespace std;
+
+
 #define SHA256_ROTL(a,b) (((a>>(32-b))&(0x7fffffff>>(31-b)))|(a<<b))
 #define SHA256_SR(a,b) ((a>>b)&(0x7fffffff>>(b-1)))
 #define SHA256_Ch(x,y,z) ((x&y)^((~x)&z))
@@ -17,10 +18,12 @@ using namespace std;
 #define SHA256_O1(x) (SHA256_ROTL(x,15)^SHA256_ROTL(x,13)^SHA256_SR(x,10))
 char* SHA256(const char* str, char* sha256, long long length, FILE* file=NULL, bool space=false){
     char *pp, *ppend;
-    long l, i, W[64], T1, T2, A, B, C, D, E, F, G, H, H0, H1, H2, H3, H4, H5, H6, H7;
+    long long l, i, W[64], T1, T2;
+    unsigned int A, B, C, D, E, F, G, H;
+    unsigned int H0, H1, H2, H3, H4, H5, H6, H7;
     H0 = 0x6a09e667, H1 = 0xbb67ae85, H2 = 0x3c6ef372, H3 = 0xa54ff53a;
     H4 = 0x510e527f, H5 = 0x9b05688c, H6 = 0x1f83d9ab, H7 = 0x5be0cd19;
-    long K[64] = {
+    long long K[64] = {
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
         0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
         0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
@@ -56,12 +59,12 @@ char* SHA256(const char* str, char* sha256, long long length, FILE* file=NULL, b
 
 
 int main(){
-/*
-    
-    char *result=new char[700];
 
+     /*
+    char *result=new char[1000];
 
-    char *str1 = "";
+   
+    char str1[] = "";
     cout << "*********************************************************************************************" << endl;
     cout << "test1: NULL " << endl;
     cout << "*********************************************************************************************" << endl;
@@ -72,7 +75,7 @@ int main(){
     cout << endl;
     
 
-    char *str2 = "abc";
+    char str2[] = "abc";
     cout << "*********************************************************************************************" << endl;
     cout << "test2:  abc " << endl;
     cout << "*********************************************************************************************" << endl;
@@ -83,7 +86,7 @@ int main(){
     cout << endl;
 
 
-    char *str3 = "gongjieP14200004";
+    char str3[] = "gongjieP14200004";
     cout << "*********************************************************************************************" << endl;
     cout << "test3:  gongjieP14200004 " << endl;
     cout << "*********************************************************************************************" << endl;
@@ -94,7 +97,7 @@ int main(){
     cout << endl;
 
 
-    char *str4 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    char str4[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     cout << "*********************************************************************************************" << endl;
     cout << "test4:  ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 " << endl;
     cout << "*********************************************************************************************" << endl;
@@ -155,5 +158,6 @@ int main(){
     }
     fclose(file);
     
+    system("pause");
     return 0;
 }

@@ -6,7 +6,6 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-using namespace std;
 
 char* SHA3_512(const char* str, char* sha3, long long length, FILE* file=NULL, bool space=false){
 	char *HEX_CHARS = "0123456789abcdef";
@@ -385,6 +384,6 @@ int main(){
         fprintf(file,"\n");
     }
     fclose(file);
-    
+    system("pause");
     return 0;
 }
