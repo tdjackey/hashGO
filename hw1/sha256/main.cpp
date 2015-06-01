@@ -123,10 +123,10 @@ int main(){
     cout << endl;
     */
 
-    char *str1="";
-    char *str2="abc";
-    char *str3="gongjieP14200004";
-    char *str4="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    char str1[] = "";
+    char str2[] = "abc";
+    char str3[] = "gongjieP14200004";
+    char str4[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     char *str5=new char[1000001];
     for(int i=0;i<1000000;i++){
         str5[i]='a';
