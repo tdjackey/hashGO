@@ -134,26 +134,29 @@ int main(){
     str5[1000000]=0;
 
     char *ans=new char[1000];
-    char* (*f[1])(const char* str, char* sha1, long long length, FILE* file, bool space)={SHA256};
-    char fname[1][10]={"SHA256"};
+    //char* (*f[1])(const char* str, char* sha1, long long length, FILE* file, bool space)={SHA256};
+    //char fname[1][10]={"SHA256"};
     FILE* file=fopen("out.txt","w");
 
     for(int i=0;i<1;i++){
-        fprintf(file,"%s:\n",fname[i]);
+        fprintf(file,"%s:\n", "SHA256");
         fprintf(file,"Test1: %s\n",str1);
         fprintf(file,"Test1中间结果:\n");
-        f[i](str1,ans,0,file,1);
+        SHA256(str1,ans,0,file,1);
+
         fprintf(file,"Test1最终结果:\n%s\n",ans);
         fprintf(file,"Test2: %s\n",str2);
         fprintf(file,"Test2中间结果:\n");
-        f[i](str2,ans,3,file,1);
+        SHA256(str2,ans,3,file,1);
+
         fprintf(file,"Test2最终结果:\n%s\n",ans);
         fprintf(file,"Test3: %s\n",str3);
         fprintf(file,"Test3中间结果:\n");
-        f[i](str3,ans,16,file,1);
+        SHA256(str3,ans,16,file,1);
+
         fprintf(file,"Test3最终结果:\n%s\n",ans);
-        fprintf(file,"Test4最终结果:\n%s\n",f[i](str4,ans,62,NULL,1));
-        fprintf(file,"Test5最终结果:\n%s\n",f[i](str5,ans,1000000,NULL,1));
+        fprintf(file,"Test4最终结果:\n%s\n",SHA256(str4,ans,62,NULL,1));
+        fprintf(file,"Test5最终结果:\n%s\n",SHA256(str5,ans,1000000,NULL,1));
         fprintf(file,"\n");
     }
     fclose(file);
